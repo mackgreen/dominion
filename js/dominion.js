@@ -26,6 +26,10 @@ $(document).ready( function() {
       console.log("common success");
       common["#document"]["pack"]["card"].forEach(function(el) {
         cards[el["name"]] = el;
+        var thumb = new Image();
+        thumb.src = "images/" + el["name"]['packName'] + "/tn_" + el["name"] + ".jpg";
+        var full = new Image();
+        full.src = "images/" + el["name"]['packName'] + "/" + el["name"] + ".jpg";
       });
     }
   });
@@ -40,6 +44,10 @@ $(document).ready( function() {
       console.log("base success");
       base["#document"]["pack"]["card"].forEach(function(el) {
         cards[el["name"]] = el;
+        var thumb = new Image();
+        thumb.src = "images/" + el["name"]['packName'] + "/tn_" + el["name"] + ".jpg";
+        var full = new Image();
+        full.src = "images/" + el["name"]['packName'] + "/" + el["name"] + ".jpg";
       });
     }
   });
