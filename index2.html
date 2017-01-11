@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script><![endif]-->
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="css/style.css" rel="stylesheet">
+
+	<script src="js/jquery-3.1.1.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/xml2json.js"></script>
+	<script src="js/dominion.js"></script>
+</head>
+
+<body>
+
+<input id="actionCards" type=hidden value="cellar,market,militia,mine,moat,remodel,smithy,village,woodcutter,workshop"></input>
+
+<div class="wrapper">
+
+	<header class="header">
+		<strong>Header:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tortor. Praesent dictum, libero ut tempus dictum, neque eros elementum mauris, quis mollis arcu velit ac diam. Etiam neque. Quisque nec turpis. Aliquam arcu nulla, dictum et, lacinia a, mollis in, ante. Sed eu felis in elit tempor venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut ultricies porttitor purus. Proin non tellus at ligula fringilla tristique. Fusce vehicula quam. Curabitur vel tortor vitae pede imperdiet ultrices. Sed tortor.
+	</header><!-- .header-->
+
+	<div class="middle">
+
+		<div class="container">
+			<main class="content">
+				<div id="actionRow1">
+				</div>
+				<div id="actionRow2">
+				</div>
+				<div id="stats">
+					<p>
+						Actions: <span id="actions">0</span>
+						Buys: <span id="buys">0</span>
+						Coins: <span id="coins">0</span>
+					</p>
+				</div>
+				<div id="playArea">
+				</div>
+				<div id="buttons">
+					<p><button id="cleanUp">clean-up</button></p>
+				</div>
+			</main><!-- .content -->
+		</div><!-- .container-->
+
+		<aside class="left-sidebar">
+		  <img id="copper" src="images/common/tn_copper.jpg" class="card"></img>
+			<img id="silver" src="images/common/tn_silver.jpg" class="card"></img>
+			<img id="gold" src="images/common/tn_gold.jpg" class="card"></img>
+		</aside><!-- .left-sidebar -->
+
+		<aside class="right-sidebar">
+			<img id="estate" src="images/common/tn_estate.jpg" class="card countBottom"></img>
+			<img id="duchy" src="images/common/tn_duchy.jpg" class="card countBottom"></img>
+			<img id="province" src="images/common/tn_province.jpg" class="card countBottom"></img>
+		  <img id="curse" src="images/common/tn_curse.jpg" class="card countBottom"></img>
+		</aside><!-- .right-sidebar -->
+
+	</div><!-- .middle-->
+
+</div><!-- .wrapper -->
+
+<footer class="footer">
+	<div id="drawPile">
+		<img src="images/common/tn_cardback.jpg"></img>
+	</div>
+	<div id="hand">
+	</div>
+	<div id="trashPile">
+		<img src="images/common/tn_trash.jpg">
+	</div>
+	<div id="discardPile">
+		<img src="images/common/tn_cardback.jpg">
+	</div>
+</footer><!-- .footer -->
+
+<div id="overlay"></div>
+
+</body>
+</html>

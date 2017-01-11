@@ -1,0 +1,207 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	height: 100%;
+	overflow: hidden;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+	display: block;
+}
+
+body {
+	font: 12px/18px Verdana, Helvetica, sans-serif;
+	height: 100%;
+	overflow: hidden;
+}
+
+.wrapper {
+	width: 100%;
+	min-width: 1000px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+}
+
+
+/* Header
+-----------------------------------------------------------------------------*/
+.header {
+	height: 50px;
+	margin-bottom: 10px;
+	background: #FFE680;
+}
+
+
+/* Middle
+-----------------------------------------------------------------------------*/
+.middle {
+	width: 100%;
+	padding: 0 0 210px;
+	position: relative;
+}
+
+.middle:after {
+	display: table;
+	clear: both;
+	content: '';
+}
+
+.container {
+	width: 100%;
+	float: left;
+	overflow: hidden;
+}
+
+.content {
+	padding: 0 180px 0 170px;
+	text-align: center;
+}
+
+#actionRow1 {
+	height: 126px;
+	margin: 0px 0px;
+}
+
+#actionRow1 > img {
+	margin-left: 0px;
+}
+
+#actionRow1 > img ~ img {
+	margin-left: 60px;
+}
+
+#actionRow2 {
+	height: 126px;
+	margin: 0px 0px;
+	margin-top: -75px;
+}
+
+#actionRow2 > img {
+	margin-left: 75px;
+}
+
+#actionRow2 > img ~ img {
+	margin-left: 60px;
+}
+
+#stats {
+	margin-top: 30px;
+}
+
+#playArea {
+  margin: 0px 0px;
+  background: #CCCCCC;
+  height: 189px;
+	padding: 20px;
+  border-radius: 20px;
+	text-align: left;
+}
+
+#playArea img {
+    width: 118px; /* you can use % */
+    height: auto;
+}
+
+#playArea > .card ~ .card {
+  margin-left: -54px;
+}
+
+/* Left Sidebar
+-----------------------------------------------------------------------------*/
+.left-sidebar {
+	float: left;
+	width: 150px;
+	margin-left: -100%;
+	position: relative;
+	background: #B5E3FF;
+}
+
+.left-sidebar img {
+	margin-left: -50px;
+	margin-bottom: 10px;
+}
+
+
+/* Right Sidebar
+-----------------------------------------------------------------------------*/
+.right-sidebar {
+	float: left;
+	width: 150px;
+	margin-left: -160px;
+	padding-left: 10px;
+	position: relative;
+	background: #FFACAA;
+}
+
+.right-sidebar img {
+	margin-bottom: 10px;
+}
+
+
+/* Footer
+-----------------------------------------------------------------------------*/
+.footer {
+	margin: -210px auto 0;
+	min-width: 1000px;
+	height: 210px;
+	background: #BFF08E;
+	position: relative;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+#drawPile {
+	float: left;
+}
+
+#hand {
+	float: left;
+	margin-left: 10px;
+}
+
+#hand img {
+    width: 118px; /* you can use % */
+    height: auto;
+}
+
+#hand > .card ~ .card {
+  margin-left: -54px;
+}
+
+#trashPile {
+	float: right;
+	margin-right: 10px;
+}
+
+#discardPile {
+	float: right;
+	margin-right: 10px;
+}
+
+.cardCount {
+  position: absolute;
+  background: red;
+  text-align: center;
+  border-radius: 10px;
+  color: white;
+  padding: 0px 5px;
+  font-size: 10px;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  filter:alpha(opacity=50);
+  -moz-opacity:0.5;
+  -khtml-opacity: 0.5;
+  opacity: 0.5;
+  z-index: 10000;
+}

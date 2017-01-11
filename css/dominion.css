@@ -1,0 +1,264 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body, .container {
+  overflow: hidden;
+  -ms-overflow-style: none;
+  height: 100%;
+}
+
+.container:before {
+  content: '';
+  height: 100%;
+  float: left;
+}
+
+.flex {
+  position: relative;
+  z-index: 1;
+}
+
+.flex:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+
+.wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.inverse, .inverse > * {
+  -moz-transform: rotateX(180deg);
+  -ms-transform: rotateX(180deg);
+  -o-transform: rotate(180deg);
+  -webkit-transform: rotateX(180deg);
+  transform: rotateX(180deg);
+}
+
+.table {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.column {
+  display: table-cell;
+}
+
+/*For demonstration only*/
+p {
+  font-size: 0.9em;
+}
+
+.important {
+  font-weight: bolder;
+  color: white;
+}
+
+body > .container {
+  text-align: center;
+}
+
+.header {
+  padding: 0px;
+  height: 0px;
+  background-color: #bf5b5b;
+}
+
+#treasure {
+  width: 150px;
+  background-color: #90adc1;
+}
+
+#action {
+  background-color: #b6ff00;
+}
+
+#victory {
+  width: 150px;
+  background-color: #723131;
+}
+
+.footer {
+  padding: 10px;
+  height: 200px;
+  background-color: #b5a8b7;
+}
+
+.cards {
+  clear: both;
+}
+
+/* Treasue cards */
+.card {
+  float: left;
+  display: inline-block;
+  background: url('common.png') no-repeat;
+  overflow: hidden;
+  text-indent: -9999px;
+  text-align: left;
+  width: 296px;
+  height: 473px;
+}
+
+#treasure .card {
+  transform: rotate(-90deg) scale(0.4,0.4);
+  transform-origin: 50% 50%;
+  margin-top: -170px;
+  margin-left: -105px;
+}
+
+#treasure > .card ~ .card {
+  margin-top: -350px;
+}
+
+#copper {
+  background-position: -1px -0px;
+}
+
+#gold {
+  background-position: -1px -948px;
+}
+
+#silver {
+  background-position: -1px -1422px;
+}
+
+.victoryCard {
+  transform: scale(0.4,0.4);
+}
+
+/* Victory Cards */
+.victoryCard > .card {
+  transform: rotate(90deg);
+  transform-origin: 50% 50%;
+  margin-top: -70px;
+}
+
+#victoryCard > .card ~ .card {
+  margin-top: -350px;
+}
+
+#curse {
+  background-position: -298px -0px;
+}
+
+#duchy {
+  background-position: -1px -474px;
+}
+
+#estate {
+  background-position: -298px -474px;
+}
+
+#province {
+  background-position: -298px -948px;
+}
+
+.minCard {
+  display: inline-block;
+  width: 296px;
+  height: 316px;
+  transform: scale(0.4, 0.4);
+  transform-origin: 0 0;
+  float: left;
+}
+
+.cardCount {
+  position: absolute;
+  right:-20px;
+  top:10px;
+  background:red;
+  text-align: center;
+  border-radius: 30px 30px 30px 30px;
+  color:white;
+  padding:5px 10px;
+  font-size:30px;
+}
+
+.victoryCount {
+  position: absolute;
+  left:-100px;
+  top:280px;
+  background:red;
+  text-align: center;
+  border-radius: 30px 30px 30px 30px;
+  color:white;
+  padding:5px 10px;
+  font-size:30px;
+}
+
+#actionRow1 {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: 60px;
+  margin-right: 140px;
+}
+
+#actionRow2 {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top:-65px;
+  margin-left: 90px;
+  margin-right: 140px;
+}
+
+#actionRow1 > .minCard {
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+#actionRow1 > .minCard ~ .minCard {
+  margin-left: -120px;
+}
+
+#actionRow2 > .minCard {
+  margin-left: 0px;
+}
+
+#actionRow2 > .minCard ~ .minCard {
+  margin-left: -120px;
+}
+
+.cardHead {
+  display: inline-block;
+  background: url('base.png') no-repeat;
+  overflow: hidden;
+  text-indent: -9999px;
+  text-align: left;
+  width: 296px;
+  height: 247px;
+}
+
+.cardFoot {
+  display: inline-block;
+  background: url('base.png') no-repeat;
+  overflow: hidden;
+  text-indent: -9999px;
+  text-align: left;
+  width: 296px;
+  height: 69px;
+}
+
+#hand > .card {
+  transform: scale(0.4,0.4);
+  transform-origin: top left;
+}
+
+#hand > .card ~ .card {
+  transform: scale(0.4,0.4);
+  transform-origin: top left;
+  margin-left: -225px;
+}

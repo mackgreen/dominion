@@ -1,0 +1,74 @@
+<html>
+
+<head>
+  <script src="jquery-3.1.1.js"></script>
+  <script src="jquery-ui.min.js"></script>
+  <script src="xml2json.js"></script>
+  <script src="dominion.js"></script>
+  <link rel="stylesheet" type="text/css" href="dominion.css">
+</head>
+
+<body>
+  <input id="actionCards" type=hidden value="cellar,market,militia,mine,moat,remodel,smithy,village,woodcutter,workshop"></input>
+  <div class="container">
+    <div class="header">
+      <div id="actionRow1">
+      </div>
+      <div id="actionRow2">
+      </div>
+      <div style="margin-top: 30px;">
+        <p style="font-family: Verdana, Helvetica, sans-serif;">
+          Actions: <span id="actions">0</span>
+          Buys: <span id="buys">0</span>
+          Coins: <span id="coins">0</span>
+        </p>
+      </div>
+      <div id="playArea" style="width: calc(100% - 440px); height: 190px; background: #CCCCCC; margin-left: 200px; border-radius: 20px; padding: 20px;">
+        &nbsp;
+      </div>
+    </div>
+    <div class="flex">
+      <div class="wrapper container inverse">
+        <div>
+          <div class="footer">
+            <div id="drawPile" style="float: left; background: url('cardback.jpg') no-repeat; transform: scale(0.4,0.4); transform-origin: top right; margin-left: -172px; width: 296px; height: 473px;">
+            </div>
+            <div id="hand" style="float: left; width=100%; margin-left:20px; margin-right: -240px; overflow:hidden;">
+            </div>
+            <div id="trashPile" style="float: right; background: url('trash.jpg') no-repeat; transform: scale(0.4,0.4); transform-origin: top left; margin-right: -172px; width: 296px; height: 473px;">
+            </div>
+            <div id="discardPile" style="float: right; background: url('cardback.jpg') no-repeat; transform: scale(0.4,0.4); transform-origin: top left; margin-right: -172px; width: 296px; height: 473px;">
+            </div>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="wrapper content">
+            <div class="table" style="overflow: hidden">
+              <div id="treasure" style="overflow: hidden; width: 150px; float: left; height: 380px; background: #CCCCCC;">
+                <div id="copper" class="card"></div>
+                <div id="silver" class="card"></div>
+                <div id="gold" class="card"></div>
+              </div>
+              <div id="victory" style="overflow: hidden; width: 150px; float: right; height: 505px; background: #CCCCCC;">
+                <div class="victoryCard">
+                  <div id="estate" class="card"></div>
+                </div>
+                <div class="victoryCard">
+                  <div id="duchy" class="card" style="margin-top: -160px;"></div>
+                </div>
+                <div class="victoryCard">
+                  <div id="province" class="card" style="margin-top: -160px;"></div>
+                </div>
+                <div class="victoryCard">
+                  <div id="curse" class="card" style="margin-top: -160px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
