@@ -57,7 +57,7 @@
   </card>
   <card>
     <packName>base</packName>
-    <name>council room</name>
+    <name>council_room</name>
     <type>action</type>
     <attack>none</attack>
     <cost>5</cost>
@@ -218,7 +218,7 @@
   </card>
   <card>
     <packName>base</packName>
-    <name>throne room</name>
+    <name>throne_room</name>
     <type>action</type>
     <attack>none</attack>
     <cost>4</cost>

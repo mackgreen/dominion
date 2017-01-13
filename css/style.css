@@ -110,6 +110,16 @@ body {
   margin-left: -54px;
 }
 
+.played {
+	float: left;
+}
+
+.bought {
+	float: right;
+	margin-left: -54px;
+}
+
+
 /* Left Sidebar
 -----------------------------------------------------------------------------*/
 .left-sidebar {
@@ -193,15 +203,21 @@ body {
 }
 
 #overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #000;
-  filter:alpha(opacity=50);
-  -moz-opacity:0.5;
-  -khtml-opacity: 0.5;
-  opacity: 0.5;
-  z-index: 10000;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.5);
+	text-align: center;
+}
+
+#overlay img {
+  padding: 5px;
+  border-radius: 5px;
+  color: #000;
+  background-color: #fff;
+  position:relative;
+  top: calc(50% - 236px);
 }
