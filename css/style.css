@@ -16,6 +16,7 @@ body {
 	font: 12px/18px Verdana, Helvetica, sans-serif;
 	height: 100%;
 	overflow: hidden;
+	background-color: #EFEFEF;
 }
 
 .wrapper {
@@ -32,7 +33,6 @@ body {
 .header {
 	height: 50px;
 	margin-bottom: 10px;
-	background: #FFE680;
 }
 
 
@@ -94,7 +94,7 @@ body {
 
 #playArea {
   margin: 0px 0px;
-  background: #CCCCCC;
+  background: #A9A9A9;
   height: 189px;
 	padding: 20px;
   border-radius: 20px;
@@ -119,6 +119,19 @@ body {
 	margin-left: -54px;
 }
 
+#cleanUp {
+	border: 1px solid;
+	font-weight: bold;
+	background: rgba(255, 56, 63, 1);
+	margin-top: 5px;
+	margin-left: 75%;
+	padding: 5px;
+	border: 1px solid rgba(255, 56, 63, 1);
+	border-radius: 4px;
+	color: #EFEFEF;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
 
 /* Left Sidebar
 -----------------------------------------------------------------------------*/
@@ -127,7 +140,6 @@ body {
 	width: 150px;
 	margin-left: -100%;
 	position: relative;
-	background: #B5E3FF;
 }
 
 .left-sidebar img {
@@ -144,7 +156,6 @@ body {
 	margin-left: -160px;
 	padding-left: 10px;
 	position: relative;
-	background: #FFACAA;
 }
 
 .right-sidebar img {
@@ -158,7 +169,7 @@ body {
 	margin: -210px auto 0;
 	min-width: 1000px;
 	height: 210px;
-	background: #BFF08E;
+	background: #CAEBF2;
 	position: relative;
 	padding-top: 10px;
 	padding-left: 10px;
@@ -194,10 +205,10 @@ body {
 
 .cardCount {
   position: absolute;
-  background: red;
+  background: rgba(255, 56, 63, 1);
   text-align: center;
   border-radius: 10px;
-  color: white;
+  color: #EFEFEF;
   padding: 0px 5px;
   font-size: 10px;
 }
@@ -220,4 +231,32 @@ body {
   background-color: #fff;
   position:relative;
   top: calc(50% - 236px);
+}
+
+#messageContainer {
+  position: absolute;
+	text-align: center;
+	width: 100%;
+}
+
+#messages {
+	width: auto;
+	font: 14px/20px Verdana, Helvetica, sans-serif;
+	font-weight: bold;
+	text-align: center;
+	border: 1px solid;
+  margin: 10px 0px;
+  padding:15px 10px 15px 50px;
+	color: rgba(255, 56, 63, 1);
+  background-color: rgba(255, 56, 63, 0.2);
+}
+
+#messages button {
+	border: 1px solid;
+	font-weight: bold;
+	color: rgba(255, 56, 63, 1);
+	background-color: #EFEFEF;
+	margin-left: 50px;
+	padding: 5px;
+	border-radius: 3px;
 }

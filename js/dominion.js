@@ -40,6 +40,11 @@ $(document).ready( function() {
     $("#overlay").hide();
   });
 
+  console.log("Adding messages");
+  $("#messageContainer").css('top', window.innerHeight - 283);
+  $("<div id=\"messages\">This is the message text<button>dismiss</button></div>").appendTo("#messageContainer");
+  console.log("Done");
+
 });
 
 //TODO: Build a getXml function
