@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import sys
 import random
 
@@ -23,7 +25,6 @@ class SomeServerProtocol(WebSocketServerProtocol):
         Try to find conversation partner for this client.
         """
         self.factory.register(self)
-        self.factory.findPartner(self)
 
     def connectionLost(self, reason):
         """
@@ -50,6 +51,7 @@ class ChatRouletteFactory(WebSocketServerFactory):
         Add client to list of managed connections.
         """
         self.clients[client.peer] = {"object": client, "partner": None}
+        self.clients[client.peer]["object"].sendMessage("Logged in as SamAxe72")
 
     def unregister(self, client):
         """
@@ -57,38 +59,20 @@ class ChatRouletteFactory(WebSocketServerFactory):
         """
         self.clients.pop(client.peer)
 
-    def findPartner(self, client):
-        """
-        Find chat partner for a client. Check if there any of tracked clients
-        is idle. If there is no idle client just exit quietly. If there is
-        available partner assign him/her to our client.
-        """
-        available_partners = [c for c in self.clients if c != client.peer and not self.clients[c]["partner"]]
-        if not available_partners:
-            print("no partners for {} check in a moment".format(client.peer))
-        else:
-            partner_key = random.choice(available_partners)
-            self.clients[partner_key]["partner"] = client
-            self.clients[client.peer]["partner"] = self.clients[partner_key]["object"]
-
     def communicate(self, client, payload, isBinary):
-        """
-        Broker message from client to its partner.
-        """
-        c = self.clients[client.peer]
-        if not c["partner"]:
-            c["object"].sendMessage("Sorry you dont have partner yet, check back in a minute")
-        else:
-            c["partner"].sendMessage(payload)
-
+        for key, value in self.clients.iteritems():
+          log.msg(key)
+          log.msg(value)
+          log.msg("here")
+          value["object"].sendMessage(payload)
 
 if __name__ == "__main__":
     log.startLogging(sys.stdout)
 
     # static file server seving index.html as root
-    root = File(".")
+    root = File("./index2.html")
 
-    factory = ChatRouletteFactory(u"ws://127.0.0.1:8080", debug=True)
+    factory = ChatRouletteFactory(u"ws://127.0.0.1:8080")
     factory.protocol = SomeServerProtocol
     resource = WebSocketResource(factory)
     # websockets resource on "/ws" path
