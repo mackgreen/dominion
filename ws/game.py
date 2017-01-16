@@ -41,9 +41,9 @@ class SomeServerProtocol(WebSocketServerProtocol):
 
 
 
-class ChatRouletteFactory(WebSocketServerFactory):
+class DominionAppFactory(WebSocketServerFactory):
     def __init__(self, *args, **kwargs):
-        super(ChatRouletteFactory, self).__init__(*args, **kwargs)
+        super(DominionAppFactory, self).__init__(*args, **kwargs)
         self.clients = {}
 
     def register(self, client):
@@ -61,18 +61,15 @@ class ChatRouletteFactory(WebSocketServerFactory):
 
     def communicate(self, client, payload, isBinary):
         for key, value in self.clients.iteritems():
-          log.msg(key)
-          log.msg(value)
-          log.msg("here")
           value["object"].sendMessage(payload)
 
 if __name__ == "__main__":
     log.startLogging(sys.stdout)
 
     # static file server seving index.html as root
-    root = File("./index2.html")
+    root = File(".")
 
-    factory = ChatRouletteFactory(u"ws://127.0.0.1:8080")
+    factory = DominionAppFactory(u"ws://127.0.0.1:8080")
     factory.protocol = SomeServerProtocol
     resource = WebSocketResource(factory)
     # websockets resource on "/ws" path
