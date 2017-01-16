@@ -7,9 +7,10 @@
     Reposition card counts on resize
 */
 
+//Glocal variables
 var cards = {};
 var hand;
-var numPlayers = 3;
+var players;
 var handIdx = 0;
 var loadCnt = 0;
 
@@ -28,6 +29,18 @@ $(document).ready( function() {
     }
   });
 
+  $("#startGame").click(function() {
+    if ( $(".selectItem input:checked").length == 10 ) {
+      console.log("Starting the game");
+      $("#newGame").hide();
+      startGame(); //This is theoretically a race with the image loading
+      cleanUp();
+      startTurn();
+    } else {
+      alert("You need 10, you currently have " + $(".selectItem input:checked").length);
+    }
+  });
+
   $("#cleanUp").click(function() {
     cleanUp();
   })
@@ -40,7 +53,15 @@ $(document).ready( function() {
     $("#overlay").hide();
   });
 
-  console.log("Adding messages");
+  $("label").click(function() {
+    var id = $(this).attr('for');
+    $(".preview img").attr("src", "images/" + cards[id]["packName"] + "/" + id + ".jpg");
+  });
+
+  $("label").click(function() {
+    console.log("Clicked!");
+  });
+
   $("#messageContainer").css('top', window.innerHeight - 283);
   $("<div id=\"messages\">This is the message text<button>dismiss</button></div>").appendTo("#messageContainer");
   console.log("Done");
@@ -61,44 +82,55 @@ function loadXmlFiles() {
       success: function (xml) {
         var json = $.xml2json(xml);
         console.log(xmlFiles[i] + " success");
+        addTab(json["#document"]["pack"]["name"]);
         json["#document"]["pack"]["card"].forEach(function(el) {
           cards[el["name"]] = el;
+          addSelect(el["packName"], el["name"]);
           var thumb = new Image();
           thumb.src = "images/" + el["packName"] + "/tn_" + el["name"] + ".jpg";
           var full = new Image();
           full.src = "images/" + el["packName"] + "/" + el["name"] + ".jpg";
         });
         loadCnt += 1;
-        if ( loadCnt == xmlFiles.length ) {
-          $(".countBottom").each(function() {
-            addCardCounts($(this));
-          });
-          addCardCounts($("#drawPile"));
-          addCardCounts($("#discardPile"));
-          startGame();
-          cleanUp();
-          startTurn();
-        }
       }
     });
   }
+  $("#cardselect").tabs();
 }
 
 function startGame() {
-  var actionCards = $("#actionCards").val().split(",");
+  players = $("#players").val().split(",");
 
-  for ( var i = 0; i < 10; i++ ) {
+  var cardTuple = [];
+  for ( var cost = 1; cost < 20; cost++ ) {
+    $(".selectItem input:checked").each(function() {
+      if ( cards[$(this).val()]["cost"] == cost ) {
+        cardTuple.push($(this).val());
+      }
+    });
+  }
+
+  console.log("Length: " + cardTuple.length);
+
+  for ( var i = 0; i < cardTuple.length; i++ ) {
     var row = "#actionRow1";
     if ( i > 4 ) {
       row = "#actionRow2";
     }
 
-    var img = $("<img id=\"" + actionCards[i] + "\" src=\"images/" + cards[actionCards[i]]['packName'] + "/tn_" + actionCards[i] + ".jpg\" class=\"card\"></div>");
+    var img = $("<img id=\"" + cardTuple[i] + "\" src=\"images/" + cards[cardTuple[i]]['packName'] + "/tn_" + cardTuple[i] + ".jpg\" class=\"card\"></div>");
     img.appendTo(row);
-    img.on('load', function(){
+    img.on('load', function() {
+      //console.log("addCardCounts(" + cardTuple[i] + ")");
       addCardCounts($(this));
     });
   }
+
+  $(".countBottom").each(function() {
+    addCardCounts($(this));
+  });
+  addCardCounts($("#drawPile"));
+  addCardCounts($("#discardPile"));
 
   hand = ["estate", "copper", "estate", "estate", "copper", "copper", "copper", "copper", "copper", "copper"];
   shuffle();
@@ -106,15 +138,16 @@ function startGame() {
 
 function addCardCounts(el) {
   var id = el.attr('id');
+  console.log("addCardCounts(" + id + ")");
   var cardCnt = 10;
   if ( cards[id] && cards[id]['type'] == "victory" ) {
     cardCnt = 8;
-    if ( numPlayers > 2 ) {
+    if ( players.length > 2 ) {
       cardCnt = 12;
     }
   }
   if ( el.attr('id') == "curse" ) {
-    cardCnt = (numPlayers - 1) * 10;
+    cardCnt = (players.length - 1) * 10;
   }
 
   var offset = el.offset();
@@ -185,7 +218,7 @@ function draw(quantity) {
     zIndex: 100
   });
 
-  $(".card").click(function(){
+  $(".card").click(function() {
     var id = $(this).attr('id');
     $("#overlay img").attr("src", "images/" + cards[id]["packName"] + "/" + id + ".jpg");
     $("#overlay").show();
@@ -273,4 +306,24 @@ function cleanUp() {
   $("#coins").text(0);
   draw(5);
   startTurn();
+}
+
+function addTab(tabName) {
+  if ( tabName == "common" ) {
+    return;
+  }
+  console.log("Adding " + tabName + " tab");
+  $("<li><a href=\"#" + tabName + "\">" + tabName + "</li>").appendTo($("#cardselect ul:first"));
+  var content = "<table id=\"" + tabName + "\" class=\"wrapper\"><tr><td class=\"selectPane\"><ul>" +
+                "</ul></td><td class=\"preview\"><img src=\"images/common/cardback.jpg\" /></td></tr></table>";
+  $(content).appendTo("#cardselect");
+}
+
+function addSelect(tabName, selectName) {
+  if ( tabName == "common" ) {
+    return;
+  }
+  var content = "<li class=\"selectItem\"><input name=\"" + selectName + "\" value=\"" + selectName + "\" type=\"checkbox\">" +
+                "<label for=\"" + selectName + "\">" + selectName + "</label></li>";
+  $(content).appendTo("#" + tabName + " ul");
 }

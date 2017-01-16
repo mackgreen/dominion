@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pack>
+  <name>base</name>
   <card>
     <packName>base</packName>
     <name>adventurer</name>
@@ -82,6 +83,7 @@
     <name>festival</name>
     <type>action</type>
     <attack>none</attack>
+    <cost>5</cost>
     <imgY>0</imgY>
     <cards>0</cards>
     <actions>2</actions>

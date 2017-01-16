@@ -209,11 +209,12 @@ body {
   text-align: center;
   border-radius: 10px;
   color: #EFEFEF;
-  padding: 0px 5px;
+  padding: 0px 5px 2px;
   font-size: 10px;
 }
 
 #overlay {
+	display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -245,8 +246,8 @@ body {
 	font-weight: bold;
 	text-align: center;
 	border: 1px solid;
-  margin: 10px 0px;
-  padding:15px 10px 15px 50px;
+  margin: 15px 0px;
+  padding:10px 10px 10px 50px;
 	color: rgba(255, 56, 63, 1);
   background-color: rgba(255, 56, 63, 0.2);
 }

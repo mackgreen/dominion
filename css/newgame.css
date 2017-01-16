@@ -1,0 +1,80 @@
+#newGame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.5);
+	text-align: center;
+}
+
+#newGame #form {
+  position: relative;
+  width: 1200px;
+  margin: auto;
+  margin-top: 25px;
+  background-color: #EFEFEF;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+#login {
+  margin-bottom: 15px;
+}
+
+#login input {
+  border: 1px solid rgba(255, 56, 63, 1);
+  padding: 5px;
+  width: 250px;
+  color: rgba(255, 56, 63, 1);
+}
+
+button {
+	border: 1px solid;
+	font-weight: bold;
+	background: rgba(255, 56, 63, 1);
+	margin-top: 5px;
+	padding: 5px;
+	border: 1px solid rgba(255, 56, 63, 1);
+	border-radius: 4px;
+	color: #EFEFEF;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.wrapper {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.selectPane {
+  width: 850px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.preview {
+  background: #CAEBF2;
+  width: 296px;
+  height: 473px;
+}
+
+.selectItem {
+  font: 16px/20px Verdana, Helvetica, sans-serif;
+  display: block;
+  float: left;
+  color: rgba(255, 56, 63, 1);
+  width: 200px;
+  padding: 10px 0px;
+  vertical-align: middle;
+}
+
+label {
+  padding: 15px;
+}
+
+#startGame {
+   float: right;
+   margin-right: 15px;
+   margin-top: 15px;
+}

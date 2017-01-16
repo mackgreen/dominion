@@ -7,16 +7,28 @@
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<link href="css/style.css" rel="stylesheet">
+  <link href="css/newgame.css" rel="stylesheet">
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
 
-	<script src="js/jquery-3.1.1.js"></script>
+  <script src="https://code.jquery.com/jquery-1.7.2.js" integrity="sha256-FxfqH96M63WENBok78hchTCDxmChGFlo+/lFIPcZPeI=" crossorigin="anonymous"></script>
 	<script src="js/jquery-ui.min.js"></script>
+
+  <script>
+  $(document).ready( function() {
+    console.log("Loading new game");
+    $("#newGame").load("newgame.html");
+  });
+  </script>
+
 	<script src="js/xml2json.js"></script>
 	<script src="js/dominion.js"></script>
+
 </head>
 
 <body>
 
-<input id="actionCards" type=hidden value="gardens,market,militia,mine,moat,remodel,smithy,village,woodcutter,workshop"></input>
+<input id="actionCards" type=hidden value="gardens,market,militia,mine,moat,remodel,smithy,village,woodcutter,workshop" />
+<input id="players" type=hidden value="Matt,Steve,Chris" />
 
 <div class="wrapper">
 
@@ -78,7 +90,8 @@
 </footer><!-- .footer -->
 
 <div id="messageContainer"></div>
-<div id="overlay"><img src="images/common/cardback.jpg"></img></div>
+<div id="newGame"></div>
+<div id="overlay"><img src="images/common/cardback" /></div>
 
 </body>
 </html>
