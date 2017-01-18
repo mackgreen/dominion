@@ -2,6 +2,7 @@
 
 import sys
 import random
+import glob
 
 from twisted.web.static import File
 from twisted.python import log
@@ -51,7 +52,8 @@ class DominionAppFactory(WebSocketServerFactory):
         Add client to list of managed connections.
         """
         self.clients[client.peer] = {"object": client, "partner": None}
-        self.clients[client.peer]["object"].sendMessage("Logged in as SamAxe72")
+        xmls = glob.glob("xml/*.xml")
+        self.clients[client.peer]["object"].sendMessage("loadXmlFiles=" + ",".join(xmls))
 
     def unregister(self, client):
         """
@@ -60,6 +62,23 @@ class DominionAppFactory(WebSocketServerFactory):
         self.clients.pop(client.peer)
 
     def communicate(self, client, payload, isBinary):
+        log.msg(payload)
+        if ( payload.find("setUserName") != -1 ):
+          split = payload.split("=")
+          self.clients[client.peer]["username"] = split[1]
+          self.clients[client.peer]["object"].sendMessage(payload)
+          return
+        if ( payload.find("startGame") != -1 ):
+          payload = payload + ":"
+          for key, value in self.clients.iteritems():
+            if ( "username" in value ):
+              payload = payload + value["username"] + ","
+            else:
+              self.clients[client.peer]["object"].sendMessage("error=Not all players have set their user name");
+              return
+          for key, value in self.clients.iteritems():
+            value["object"].sendMessage(payload[:-1])
+          return
         for key, value in self.clients.iteritems():
           value["object"].sendMessage(payload)
 
