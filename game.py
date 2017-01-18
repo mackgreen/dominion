@@ -52,8 +52,11 @@ class DominionAppFactory(WebSocketServerFactory):
         Add client to list of managed connections.
         """
         self.clients[client.peer] = {"object": client, "partner": None}
-        xmls = glob.glob("xml/*.xml")
-        self.clients[client.peer]["object"].sendMessage("loadXmlFiles=" + ",".join(xmls))
+        xmls = glob.glob("/var/www/html/xml/*.xml")
+        filestr = ""
+        for xml in xmls:
+          filestr = filestr + "," + xml.replace("/var/www/html/", "")
+        self.clients[client.peer]["object"].sendMessage("loadXmlFiles=" + filestr[1:])
 
     def unregister(self, client):
         """
