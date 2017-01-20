@@ -118,11 +118,6 @@ $(document).ready( function() {
     $("#overlay").hide();
   });
 
-  $("label").click(function() {
-    var id = $(this).attr('for');
-    $(".preview img").attr("src", "images/" + cards[id]["packName"] + "/" + id + ".jpg");
-  });
-
   $("#newGameButton").click(function() {
     $("#newGame").show();
   });
@@ -165,6 +160,11 @@ function loadXmlFiles(fileList) {
       }
     });
   }
+  $("label").click(function() {
+    var id = $(this).attr('for');
+    console.log("Click " + id);
+    $(".preview img").attr("src", "images/" + cards[id]["packName"] + "/" + id + ".jpg");
+  });
   $("#cardselect").tabs();
 }
 
