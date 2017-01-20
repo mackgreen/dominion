@@ -72,15 +72,17 @@ class DominionAppFactory(WebSocketServerFactory):
           self.clients[client.peer]["object"].sendMessage(payload)
           return
         if ( payload.find("startGame") != -1 ):
-          payload = payload + ":"
+          usernames = []
           for key, value in self.clients.iteritems():
             if ( "username" in value ):
-              payload = payload + value["username"] + ","
+              usernames.append(value["username"])
             else:
               self.clients[client.peer]["object"].sendMessage("error=Not all players have set their user name");
               return
+          player = random.choice(usernames)
           for key, value in self.clients.iteritems():
-            value["object"].sendMessage(payload[:-1])
+            value["object"].sendMessage(payload + ":" + ",".join(usernames))
+            value["object"].sendMessage("startTurn=" + player)
           return
         for key, value in self.clients.iteritems():
           value["object"].sendMessage(payload)
