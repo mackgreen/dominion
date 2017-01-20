@@ -8,32 +8,23 @@
 	<meta name="description" content="" />
 	<link href="css/style.css" rel="stylesheet">
   <link href="css/newgame.css" rel="stylesheet">
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
+  <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
 
   <script src="https://code.jquery.com/jquery-1.7.2.js" integrity="sha256-FxfqH96M63WENBok78hchTCDxmChGFlo+/lFIPcZPeI=" crossorigin="anonymous"></script>
 	<script src="js/jquery-ui.min.js"></script>
-
-  <script>
-  $(document).ready( function() {
-    console.log("Loading new game");
-    $("#newGame").load("newgame.html");
-  });
-  </script>
-
 	<script src="js/xml2json.js"></script>
 	<script src="js/dominion.js"></script>
-
 </head>
 
 <body>
 
-<input id="actionCards" type=hidden value="gardens,market,militia,mine,moat,remodel,smithy,village,woodcutter,workshop" />
-<input id="players" type=hidden value="Matt,Steve,Chris" />
-
 <div class="wrapper">
 
 	<header class="header">
-	</header><!-- .header-->
+		<button id="newGameButton">new game</button>
+		<button id="endGameButton">end game</button>
+		<div id="logControl">+</div><div id="minLog">message log</div>
+	</header>
 
 	<div class="middle">
 
@@ -55,25 +46,25 @@
 				<div id="buttons">
 					<p><button id="cleanUp">clean-up</button></p>
 				</div>
-			</main><!-- .content -->
-		</div><!-- .container-->
+			</main>
+		</div>
 
 		<aside class="left-sidebar">
 		  <img id="copper" src="images/common/tn_copper.jpg" class="card"></img>
 			<img id="silver" src="images/common/tn_silver.jpg" class="card"></img>
 			<img id="gold" src="images/common/tn_gold.jpg" class="card"></img>
-		</aside><!-- .left-sidebar -->
+		</aside>
 
 		<aside class="right-sidebar">
 			<img id="estate" src="images/common/tn_estate.jpg" class="card countBottom"></img>
 			<img id="duchy" src="images/common/tn_duchy.jpg" class="card countBottom"></img>
 			<img id="province" src="images/common/tn_province.jpg" class="card countBottom"></img>
 		  <img id="curse" src="images/common/tn_curse.jpg" class="card countBottom"></img>
-		</aside><!-- .right-sidebar -->
+		</aside>
 
-	</div><!-- .middle-->
+	</div>
 
-</div><!-- .wrapper -->
+</div>
 
 <footer class="footer">
 	<div id="drawPile">
@@ -87,11 +78,33 @@
 	<div id="discardPile">
 		<img src="images/common/tn_cardback.jpg">
 	</div>
-</footer><!-- .footer -->
+</footer>
 
-<div id="messageContainer"></div>
-<div id="newGame"></div>
-<div id="overlay"><img src="images/common/cardback" /></div>
+<div id="newGame">
+	<div id="form">
+	  <div id="login">
+			<p id="userName"></p>
+	    <input id="setUserName"></>
+	    <button>set name</button>
+	  </div>
+	  <div id="setup">
+	    <div id="cardselect">
+	      <ul>
+	      </ul>
+	    </div>
+	  </div>
+	  <div>
+	    <div style="height: 50px; vertical-align: middle;">
+	      <button id="startGame">start game</button>
+				<button id="cancel">cancel</button>
+	    </div>
+	  </div>
+	</div>
+</div>
+<div id="overlay"><img src="images/common/cardback.jpg" /></div>
+
+<div id="messageLog"></div>
+<div id="attack"></div>
 
 </body>
 </html>

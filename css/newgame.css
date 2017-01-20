@@ -30,6 +30,15 @@
   color: rgba(255, 56, 63, 1);
 }
 
+#userName {
+  display: none;
+  margin: 13px 0px;
+  height: 25px;
+  font: 20px/20px Verdana, Helvetica, sans-serif;
+  font-weight: bold;
+  color: rgba(255, 56, 63, 1);
+}
+
 button {
 	border: 1px solid;
 	font-weight: bold;
@@ -73,7 +82,7 @@ label {
   padding: 15px;
 }
 
-#startGame {
+#cancel, #startGame {
    float: right;
    margin-right: 15px;
    margin-top: 15px;

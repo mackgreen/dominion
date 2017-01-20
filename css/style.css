@@ -33,8 +33,42 @@ body {
 .header {
 	height: 50px;
 	margin-bottom: 10px;
+	background-color: rgba(255, 56, 63, 0.2);
+	border-bottom: 2px solid rgba(255, 56, 63, 1);
 }
 
+.header button {
+	margin-left: 15px;
+	margin-top: 9px;
+}
+
+#logControl, #messageLog, #minLog {
+	float: right;
+	width: 500px;
+	height: 20px;
+	margin-top: 10px;
+	margin-right: 2px;
+	padding: 1px 5px;
+	border: 1px solid rgba(255, 56, 63, 1);
+	font: 12px/20px Verdana, Helvetica, sans-serif;
+	color: rgba(255, 56, 63, 1);
+	background-color: #EFEFEF;
+}
+
+#messageLog {
+	top: 150px;
+	left: 150px;
+	position: absolute;
+	height: 300px;
+	overflow: auto;
+	z-index: 10000;
+}
+
+#logControl {
+	margin-right: 15px;
+	width: 20px;
+	text-align: center;
+}
 
 /* Middle
 -----------------------------------------------------------------------------*/
@@ -68,6 +102,8 @@ body {
 
 #actionRow1 > img {
 	margin-left: 0px;
+	width: 118px;
+	height:126px;
 }
 
 #actionRow1 > img ~ img {
@@ -82,6 +118,8 @@ body {
 
 #actionRow2 > img {
 	margin-left: 75px;
+	width: 118px;
+	height:126px;
 }
 
 #actionRow2 > img ~ img {
@@ -234,30 +272,6 @@ body {
   top: calc(50% - 236px);
 }
 
-#messageContainer {
-  position: absolute;
-	text-align: center;
-	width: 100%;
-}
-
-#messages {
-	width: auto;
-	font: 14px/20px Verdana, Helvetica, sans-serif;
-	font-weight: bold;
-	text-align: center;
-	border: 1px solid;
-  margin: 15px 0px;
-  padding:10px 10px 10px 50px;
-	color: rgba(255, 56, 63, 1);
-  background-color: rgba(255, 56, 63, 0.2);
-}
-
-#messages button {
-	border: 1px solid;
-	font-weight: bold;
-	color: rgba(255, 56, 63, 1);
-	background-color: #EFEFEF;
-	margin-left: 50px;
-	padding: 5px;
-	border-radius: 3px;
+#atttack {
+	display: none;
 }
