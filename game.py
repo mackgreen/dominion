@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!python
 
 import sys
 import random
@@ -91,7 +91,7 @@ if __name__ == "__main__":
     # static file server seving index.html as root
     root = File(".")
 
-    factory = DominionAppFactory(u"ws://127.0.0.1:8080")
+    factory = DominionAppFactory(u"ws://157.170.18.86:8080")
     factory.protocol = SomeServerProtocol
     resource = WebSocketResource(factory)
     # websockets resource on "/ws" path
