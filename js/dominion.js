@@ -460,7 +460,7 @@ function addToHand(card) {
     $("<img id=\"" + card + "\" src=\"images/" + cards[card]['packName'] + "/" + card + ".jpg\" class=\"card hand\"></div>").appendTo($("#hand"));
   }
   if ( cards[card]["coins"] ) {
-    var coins = parseInt($("#coins").text()) - parseInt(cards[card]["coins"]);
+    var coins = parseInt($("#coins").text()) + parseInt(cards[card]["coins"]);
     $("#coins").text(coins);
   }
 }
