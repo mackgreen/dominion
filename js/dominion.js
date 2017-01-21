@@ -9,7 +9,7 @@
 
 //Glocal variables
 var cards = {};
-var hand;
+var hand = [];
 var players;
 var handIdx = 0;
 var loadCnt = 0;
@@ -17,6 +17,7 @@ var socket;
 var turn;
 var userName;
 var curPlayer;
+var cardSplit;
 
 
 //Web socket
@@ -24,8 +25,6 @@ window.addEventListener("load", function() {
   socket = new WebSocket("ws://104.236.51.19:8080/ws");
   socket.onmessage = function(event) {
     var split = event.data.split("=");
-    console.log(event.data);
-    console.log("Calling " + split[0] + "(" + split[1] + ")");
     window[split[0]](split[1]);
   };
 });
@@ -37,6 +36,9 @@ $(document).ready( function() {
   msgOffset.top = msgOffset.top + $("#minLog").height() + 3;
   $("#messageLog").offset(msgOffset);
   $("#messageLog").hide();
+
+  addCardCounts($("#drawPile"));
+  addCardCounts($("#discardPile"));
 
   $("#logControl").click( function() {
     if ( $("#logControl").text() == "+" ) {
@@ -92,7 +94,6 @@ $(document).ready( function() {
 
   $("#startGame").click(function() {
     if ( $(".selectItem input:checked").length == 10 ) {
-      console.log("Starting the game");
       var output = $.map($('.selectItem input:checked'), function(n, i){
         return n.value;
       }).join(',');
@@ -138,7 +139,6 @@ function setUserName(name) {
 function loadXmlFiles(fileList) {
   var xmlFiles = fileList.split(",");
   for ( var i = 0; i < xmlFiles.length; i++ ) {
-    console.log("Fetching " + xmlFiles[i]);
     $.ajax({
       type: "GET",
       url: xmlFiles[i],
@@ -146,7 +146,6 @@ function loadXmlFiles(fileList) {
       async: false,
       success: function (xml) {
         var json = $.xml2json(xml);
-        console.log(xmlFiles[i] + " success");
         addTab(json["#document"]["pack"]["name"]);
         json["#document"]["pack"]["card"].forEach(function(el) {
           cards[el["name"]] = el;
@@ -162,7 +161,6 @@ function loadXmlFiles(fileList) {
   }
   $("label").click(function() {
     var id = $(this).attr('for');
-    console.log("Click " + id);
     $(".preview img").attr("src", "images/" + cards[id]["packName"] + "/" + id + ".jpg");
   });
   $("#cardselect").tabs();
@@ -188,11 +186,12 @@ function addSelect(tabName, selectName) {
 }
 
 function startGame(dataString) {
+  log("Starting game");
   $("#newGame").hide();
   var dataSplit = dataString.split(":");
   players = dataSplit[1].split(",");
 
-  var cardSplit = dataSplit[0].split(",");
+  cardSplit = dataSplit[0].split(",");
   var cardTuple = [];
   for ( var cost = 1; cost < 20; cost++ ) {
     for ( var i = 0; i < cardSplit.length; i++ ) {
@@ -201,6 +200,15 @@ function startGame(dataString) {
       }
     }
   }
+
+  $("#actionRow1").empty();
+  $("#actionRow2").empty();
+  $("#playArea").empty();
+  $("#hand").empty();
+
+  $("aside > #province").attr("src", "images/common/tn_province.jpg");
+  $("aside > #duchy").attr("src", "images/common/tn_duchy.jpg");
+  $("aside > #estate").attr("src", "images/common/tn_estate.jpg");
 
   for ( var i = 0; i < cardTuple.length; i++ ) {
     var row = "#actionRow1";
@@ -211,7 +219,6 @@ function startGame(dataString) {
     var img = $("<img id=\"" + cardTuple[i] + "\" src=\"images/" + cards[cardTuple[i]]['packName'] + "/tn_" + cardTuple[i] + ".jpg\" class=\"card actionCard\"></div>");
     img.appendTo(row);
     img.on('load', function() {
-      //console.log("addCardCounts(" + cardTuple[i] + ")");
       addCardCounts($(this));
       $(this).off('load');
     });
@@ -220,23 +227,19 @@ function startGame(dataString) {
   $(".countBottom").each(function() {
     addCardCounts($(this));
   });
-  addCardCounts($("#drawPile"));
-  addCardCounts($("#discardPile"));
 
+  hand.length = 0;
   hand = ["estate", "copper", "estate", "estate", "copper", "copper", "copper", "copper", "copper", "copper"];
+  console.log(hand);
   shuffle();
 
-  count = parseInt($("#discardPile_cnt").text()) + $("#playArea img").length + $("#hand img").length;
-  updateCount($("#discardPile_cnt"), count);
-  $("#playArea").empty();
-  $("#hand").empty();
+  $("#discardPile_cnt").text(0);
   $("#coins").text(0);
   draw(5);
 }
 
 function addCardCounts(el) {
   var id = el.attr('id');
-  console.log("addCardCounts(" + id + ")");
   var cardCnt = 10;
   if ( cards[id] && cards[id]['type'] == "victory" ) {
     cardCnt = 8;
@@ -264,25 +267,30 @@ function addCardCounts(el) {
 }
 
 function updateCount(el, count) {
+  if ( el.attr('id') == "discardPile_cnt" ) {
+    console.log("Begin discard count = " + count);
+  }
   if ( count != 0 ) {
     count = count || parseInt(el.text()) - 1;
+  }
+  if ( count == 10 ) {
+    console.log("Ten " + el.attr('id'));
+  }
+  if ( el.attr('id') == "discardPile_cnt" ) {
+    console.log("Discard count = " + count);
+    var err = new Error();
+    console.log(err.stack);
   }
   el.text(count);
 }
 
 function shuffle() {
-  console.log("Every day I'm shufflin...");
+  log("Every day I'm shufflin...");
 
   var splice = $("#hand img").length + $(".played").length;
   hand = hand.concat(hand.splice(0, splice));
 
-  console.log("Shuffle splice = " + splice);
-  console.log("Hand length = " + hand.length);
-
   let counter = hand.length - splice + $(".bought").length;
-  console.log("Shuffle counter = " + counter);
-
-  console.log("Counter = " + counter);
   handIdx = counter;
   while (counter > 0) {
     let index = Math.floor(Math.random() * counter);
@@ -385,6 +393,11 @@ function playCard(card) {
     $("#attack").append("<p>" + cards[card]["attack"] + "</p>");
     $("#attack").dialog();
   }
+  $(".card").click(function() {
+    var id = $(this).attr('id');
+    $("#overlay img").attr("src", "images/" + cards[id]["packName"] + "/" + id + ".jpg");
+    $("#overlay").show();
+  });
 }
 
 function buy(card) {
@@ -394,8 +407,12 @@ function buy(card) {
   updateCount($("#" + card + "_cnt"));
 
   if ( $("#" + card + "_cnt").text() == "0" ) {
-    $("#" + card + ":first").attr("src", "images/blank.png");
-    $("#" + card + "_cnt").remove();
+    if ( $("aside > #" + card).hasClass("countBottom") ) {
+      $("aside > #" + card ).attr("src", "images/blank.png");
+    } else {
+      $("#" + card + ":first").attr("src", "images/blank.png");
+    }
+    $("#" + card + "_cnt").hide();
   }
 
   var buys = parseInt($("#buys").text()) - 1;
@@ -407,12 +424,20 @@ function buy(card) {
   if ( curPlayer == userName ) {
     hand.push(card);
   }
+
+  $(".card").click(function() {
+    var id = $(this).attr('id');
+    $("#overlay img").attr("src", "images/" + cards[id]["packName"] + "/" + id + ".jpg");
+    $("#overlay").show();
+  });
 }
 
 function discard(card) {
   var parts = card.split(":");
   log(parts[0] + " discarded " + parts[1]);
   $("#hand #" + parts[1] + ":first").remove();
+  var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
+  $("#coins").text(coins);
 }
 
 function trash(card) {
@@ -421,6 +446,8 @@ function trash(card) {
   $("#hand #" + parts[1] + ":first").remove();
   var delIdx = hand.lastIndexOf(parts[1]);
   hand.splice(delIdx, 1);
+  var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
+  $("#coins").text(coins);
 }
 
 function addToHand(card) {
@@ -428,6 +455,8 @@ function addToHand(card) {
   if ( curPlayer == userName ) {
     $("<img id=\"" + card + "\" src=\"images/" + cards[card]['packName'] + "/" + card + ".jpg\" class=\"card hand\"></div>").appendTo($("#hand"));
   }
+  var coins = parseInt($("#coins").text()) + parseInt(cards[card]["coins"]);
+  $("#coins").text(coins);
 }
 
 function show(card) {
@@ -441,6 +470,10 @@ function cleanUp(nextTurn) {
     count = parseInt($("#discardPile_cnt").text()) + $("#playArea img").length + $("#hand img").length;
     updateCount($("#discardPile_cnt"), count);
   }
+  if ( checkEndGame() ) {
+    socket.send("endGame=endGame");
+    return;
+  }
   $("#playArea").empty();
   if ( curPlayer == userName ) {
     $("#hand").empty();
@@ -452,6 +485,35 @@ function cleanUp(nextTurn) {
       socket.send("startTurn=" + players[idx + 1]);
     }
   }
+}
+
+function checkEndGame() {
+  var zeros = 0;
+  for ( var i = 0; i < cardSplit.length; i++ ) {
+    if ( $("#" + cardSplit[i] + "_cnt").text() == "0" ) {
+      zeros++;
+    }
+  }
+  if ( zeros >= 3 ) {
+    return true;
+  }
+  if ( $("#province_cnt").text() == "0" ) {
+    return true;
+  }
+  return false;
+}
+
+function endGame(temp) {
+  log("Game over!");
+  var vicPts = 0;
+  for ( var i = 0; i < hand.length; i++ ) {
+    if ( cards[hand[i]]["type"] == "victory" ) {
+      var pts = cards[hand[i]]["points"];
+      pts = pts.replace("%DECKSIZE%", hand.length);
+      vicPts = vicPts + Math.floor(eval(pts));
+    }
+  }
+  socket.send("log=" + userName + " " + vicPts + " final victory points");
 }
 
 function error(message) {
