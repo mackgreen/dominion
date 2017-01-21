@@ -19,7 +19,6 @@ var userName;
 var curPlayer;
 var cardSplit;
 
-
 //Web socket
 window.addEventListener("load", function() {
   socket = new WebSocket("ws://104.236.51.19:8080/ws");
@@ -386,6 +385,7 @@ function playCard(card) {
     }
 
     if ( curPlayer == userName ) {
+      console.log("Removing " + card)
       $("#hand #" + card + ":first").remove();
     }
   }
@@ -436,8 +436,10 @@ function discard(card) {
   var parts = card.split(":");
   log(parts[0] + " discarded " + parts[1]);
   $("#hand #" + parts[1] + ":first").remove();
-  var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
-  $("#coins").text(coins);
+  if ( cards[parts[1]]["coins"] ) {
+    var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
+    $("#coins").text(coins);
+  }
 }
 
 function trash(card) {
@@ -446,8 +448,10 @@ function trash(card) {
   $("#hand #" + parts[1] + ":first").remove();
   var delIdx = hand.lastIndexOf(parts[1]);
   hand.splice(delIdx, 1);
-  var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
-  $("#coins").text(coins);
+  if ( cards[parts[1]]["coins"] ) {
+    var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
+    $("#coins").text(coins);
+  }
 }
 
 function addToHand(card) {
@@ -455,8 +459,10 @@ function addToHand(card) {
   if ( curPlayer == userName ) {
     $("<img id=\"" + card + "\" src=\"images/" + cards[card]['packName'] + "/" + card + ".jpg\" class=\"card hand\"></div>").appendTo($("#hand"));
   }
-  var coins = parseInt($("#coins").text()) + parseInt(cards[card]["coins"]);
-  $("#coins").text(coins);
+  if ( cards[card]["coins"] ) {
+    var coins = parseInt($("#coins").text()) - parseInt(cards[card]["coins"]);
+    $("#coins").text(coins);
+  }
 }
 
 function show(card) {
