@@ -381,8 +381,9 @@ function playCard(card) {
     var actCnt = parseInt($("#actions").text()) - 1 + parseInt(cards[card]["actions"]);
     updateCount($("#actions"), actCnt);
 
+    var coins = 0;
     if ( curPlayer == userName ) {
-      var coins = draw(parseInt(cards[card]["cards"]));
+      coins = draw(parseInt(cards[card]["cards"]));
       $("#hand #" + card + ":first").remove();
     }
 
