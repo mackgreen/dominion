@@ -81,6 +81,9 @@ $(document).ready( function() {
 
   $("#hand").droppable({
     drop: function(event, ui) {
+      if ( $(ui.draggable).hasClass("hand") ) {
+        return;
+      }
       if ( curPlayer == userName ) {
         socket.send("addToHand=" + $(ui.draggable).attr('id'));
       }
