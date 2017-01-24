@@ -103,7 +103,14 @@ $(document).ready( function() {
   });
 
   $("#cleanUp").click(function() {
-    cleanUp();
+    socket.send("cleanUp=" + curPlayer);
+    var idx = players.indexOf(curPlayer);
+    console.log(players);
+    if ( idx == players.length - 1 ) {
+      socket.send("startTurn=" + players[0]);
+    } else {
+      socket.send("startTurn=" + players[idx + 1]);
+    }
   })
 
   $("#drawPile").click(function() {
@@ -484,12 +491,6 @@ function cleanUp(nextTurn) {
   if ( curPlayer == userName ) {
     $("#hand").empty();
     draw(5);
-    var idx = players.indexOf(curPlayer);
-    if ( idx == players.length - 1 ) {
-      socket.send("startTurn=" + players[0]);
-    } else {
-      socket.send("startTurn=" + players[idx + 1]);
-    }
   }
 }
 
