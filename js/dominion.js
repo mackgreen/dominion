@@ -282,9 +282,6 @@ function updateCount(el, count) {
   if ( count != 0 ) {
     count = count || parseInt(el.text()) - 1;
   }
-  if ( count == 10 ) {
-    console.log("Ten " + el.attr('id'));
-  }
   if ( el.attr('id') == "discardPile_cnt" ) {
     console.log("Discard count = " + count);
     var err = new Error();
@@ -452,6 +449,8 @@ function discard(card) {
     var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
     $("#coins").text(coins);
   }
+  count = parseInt($("#discardPile_cnt").text()) + 1;
+  updateCount($("#discardPile_cnt"), count);
 }
 
 function trash(card) {
