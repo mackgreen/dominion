@@ -445,7 +445,7 @@ function discard(card) {
   if ( parts[0] == userName ) {
     $("#hand #" + parts[1] + ":first").remove();
   }
-  if ( cards[parts[1]]["coins"] ) {
+  if ( curPlayer == userName && cards[parts[1]]["coins"] ) {
     var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
     $("#coins").text(coins);
   }
