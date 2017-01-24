@@ -397,7 +397,7 @@ function playCard(card) {
 
   }
   if ( cards[card]["attack"] != "none" ) {
-    $("#attack").append("<p>" + cards[card]["attack"] + "</p>");
+    $("#attack").html("<p>" + cards[card]["attack"] + "</p>");
     $("#attack").dialog();
   }
   $(".card").click(function() {
