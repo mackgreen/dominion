@@ -444,7 +444,7 @@ function buy(card) {
 function discard(card) {
   var parts = card.split(":");
   log(parts[0] + " discarded " + parts[1]);
-  if ( curPlayer == userName ) {
+  if ( parts[0] == userName ) {
     $("#hand #" + parts[1] + ":first").remove();
   }
   if ( cards[parts[1]]["coins"] ) {
@@ -456,7 +456,7 @@ function discard(card) {
 function trash(card) {
   var parts = card.split(":");
   log(parts[0] + " trashed " + parts[1]);
-  if ( curPlayer == userName ) {
+  if ( parts[0] == userName ) {
     $("#hand #" + parts[1] + ":first").remove();
     var delIdx = hand.lastIndexOf(parts[1]);
     hand.splice(delIdx, 1);
