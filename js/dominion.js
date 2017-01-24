@@ -378,7 +378,10 @@ function playCard(card) {
     var actCnt = parseInt($("#actions").text()) - 1 + parseInt(cards[card]["actions"]);
     updateCount($("#actions"), actCnt);
 
-    var coins = draw(parseInt(cards[card]["cards"]));
+    if ( curPlayer == userName ) {
+      var coins = draw(parseInt(cards[card]["cards"]));
+      $("#hand #" + card + ":first").remove();
+    }
 
     coins = coins + parseInt($("#coins").text()) + parseInt(cards[card]["coins"]);
     updateCount($("#coins"), coins);
@@ -390,11 +393,7 @@ function playCard(card) {
     if ( $("#playArea .card").length > 1 && $(".played").length == 1 ) {
       $(".played").css("margin-left", "0px");
     }
-
-    if ( curPlayer == userName ) {
-      console.log("Removing " + card)
-      $("#hand #" + card + ":first").remove();
-    }
+    
   }
   if ( cards[card]["attack"] != "none" ) {
     $("#attack").append("<p>" + cards[card]["attack"] + "</p>");
