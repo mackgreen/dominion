@@ -393,7 +393,7 @@ function playCard(card) {
     if ( $("#playArea .card").length > 1 && $(".played").length == 1 ) {
       $(".played").css("margin-left", "0px");
     }
-    
+
   }
   if ( cards[card]["attack"] != "none" ) {
     $("#attack").append("<p>" + cards[card]["attack"] + "</p>");
@@ -441,7 +441,9 @@ function buy(card) {
 function discard(card) {
   var parts = card.split(":");
   log(parts[0] + " discarded " + parts[1]);
-  $("#hand #" + parts[1] + ":first").remove();
+  if ( curPlayer == userName ) {
+    $("#hand #" + parts[1] + ":first").remove();
+  }
   if ( cards[parts[1]]["coins"] ) {
     var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
     $("#coins").text(coins);
@@ -451,9 +453,11 @@ function discard(card) {
 function trash(card) {
   var parts = card.split(":");
   log(parts[0] + " trashed " + parts[1]);
-  $("#hand #" + parts[1] + ":first").remove();
-  var delIdx = hand.lastIndexOf(parts[1]);
-  hand.splice(delIdx, 1);
+  if ( curPlayer == userName ) {
+    $("#hand #" + parts[1] + ":first").remove();
+    var delIdx = hand.lastIndexOf(parts[1]);
+    hand.splice(delIdx, 1);
+  }
   if ( cards[parts[1]]["coins"] ) {
     var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
     $("#coins").text(coins);
