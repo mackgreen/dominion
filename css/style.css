@@ -277,3 +277,11 @@ body {
 #atttack {
 	display: none;
 }
+
+.ui-button {
+	padding: 5px;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}

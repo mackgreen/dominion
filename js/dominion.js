@@ -367,8 +367,7 @@ function startTurn(player) {
       zIndex: 100
     });
 
-    $("#attack").html("<p>Your turn</p>");
-    $("#attack").dialog();
+    attack("Your turn");
   }
 }
 
@@ -409,8 +408,7 @@ function playCard(card) {
   });
 
   if ( cards[card]["attack"] != "none" ) {
-    $("#attack").html("<p>" + cards[card]["attack"] + "</p>");
-    $("#attack").dialog();
+    attack(cards[card]["attack"]);
   }
 
 }
@@ -540,6 +538,21 @@ function endGame(temp) {
     }
   }
   socket.send("log=" + userName + " " + vicPts + " final victory points");
+}
+
+function attack(text) {
+  $("#attack").html("<p>" + text + "</p>");
+  $("#attack").dialog({
+    dialogClass: "no-close",
+    buttons: [
+      {
+        text: "ok",
+        click: function() {
+          $(this).dialog("close");
+        }
+      }
+    ]
+  });
 }
 
 function error(message) {
