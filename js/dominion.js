@@ -429,10 +429,10 @@ function buy(card) {
   }
 
   var buys = parseInt($("#buys").text()) - 1;
-  $("#buys").text(buys);
+  socket.send("setText=buys:" + buys);
 
   var coins = parseInt($("#coins").text()) - parseInt(cards[card]["cost"]);
-  $("#coins").text(coins);
+  socket.send("setText=coins:" + coins);
 
   if ( curPlayer == userName ) {
     hand.push(card);
@@ -453,7 +453,7 @@ function discard(card) {
   }
   if ( curPlayer == userName && cards[parts[1]]["coins"] ) {
     var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
-    $("#coins").text(coins);
+    socket.send("setText=coins:" + coins);
   }
   count = parseInt($("#discardPile_cnt").text()) + 1;
   updateCount($("#discardPile_cnt"), count);
@@ -469,7 +469,7 @@ function trash(card) {
   }
   if ( cards[parts[1]]["coins"] ) {
     var coins = parseInt($("#coins").text()) - parseInt(cards[parts[1]]["coins"]);
-    $("#coins").text(coins);
+    socket.send("setText=coins:" + coins);
   }
 }
 
@@ -480,7 +480,7 @@ function addToHand(card) {
   }
   if ( cards[card]["coins"] ) {
     var coins = parseInt($("#coins").text()) + parseInt(cards[card]["coins"]);
-    $("#coins").text(coins);
+    socket.send("setText=coins:" + coins);
   }
   $(".card").draggable({
     containment: "#container",
