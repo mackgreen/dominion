@@ -106,13 +106,15 @@ $(document).ready( function() {
   });
 
   $("#cleanUp").click(function() {
-    socket.send("cleanUp=" + curPlayer);
-    var idx = players.indexOf(curPlayer);
-    console.log(players);
-    if ( idx == players.length - 1 ) {
-      socket.send("startTurn=" + players[0]);
-    } else {
-      socket.send("startTurn=" + players[idx + 1]);
+    if ( curPlayer == userName ) {
+      socket.send("cleanUp=" + curPlayer);
+      var idx = players.indexOf(curPlayer);
+      console.log(players);
+      if ( idx == players.length - 1 ) {
+        socket.send("startTurn=" + players[0]);
+      } else {
+        socket.send("startTurn=" + players[idx + 1]);
+      }
     }
   })
 
@@ -268,6 +270,8 @@ function addCardCounts(el) {
     left = offset.left - 5;
   }
 
+  $("#" + id + "_cnt").remove();
+
   $("<span class=\"cardCount\" " +
           "id=\"" + id + "_cnt\" " +
           "style=\"top:" + top + "px; " +
@@ -276,12 +280,10 @@ function addCardCounts(el) {
 }
 
 function updateCount(el, count) {
-  if ( el.attr('id') == "discardPile_cnt" ) {
-    console.log("Begin discard count = " + count);
-  }
   if ( count != 0 ) {
     count = count || parseInt(el.text()) - 1;
   }
+  console.log("Updating count for " + el.attr('id') + " to " + count);
   if ( el.attr('id') == "discardPile_cnt" ) {
     console.log("Discard count = " + count);
     var err = new Error();
@@ -364,6 +366,9 @@ function startTurn(player) {
       helper: 'clone',
       zIndex: 100
     });
+
+    $("#attack").html("<p>Your turn</p>");
+    $("#attack").dialog();
   }
 }
 
@@ -376,7 +381,7 @@ function playCard(card) {
   log(curPlayer + " played " + card);
   if ( cards[card]["type"] == "action" ) {
     var actCnt = parseInt($("#actions").text()) - 1 + parseInt(cards[card]["actions"]);
-    updateCount($("#actions"), actCnt);
+    socket.send("setText=actions:" + actCnt);
 
     var coins = 0;
     if ( curPlayer == userName ) {
@@ -385,10 +390,10 @@ function playCard(card) {
     }
 
     coins = coins + parseInt($("#coins").text()) + parseInt(cards[card]["coins"]);
-    updateCount($("#coins"), coins);
+    socket.send("setText=coins:" + coins);
 
     var buys = parseInt($("#buys").text()) + parseInt(cards[card]["buys"]);
-    $("#buys").text(buys);
+    socket.send("setText=buys:" + buys);
 
     $("<img id=\"" + card + "\" src=\"images/" + cards[card]['packName'] + "/" + card + ".jpg\" class=\"card played\"></div>").appendTo($("#playArea"));
     if ( $("#playArea .card").length > 1 && $(".played").length == 1 ) {
@@ -396,15 +401,18 @@ function playCard(card) {
     }
 
   }
-  if ( cards[card]["attack"] != "none" ) {
-    $("#attack").html("<p>" + cards[card]["attack"] + "</p>");
-    $("#attack").dialog();
-  }
+
   $(".card").click(function() {
     var id = $(this).attr('id');
     $("#overlay img").attr("src", "images/" + cards[id]["packName"] + "/" + id + ".jpg");
     $("#overlay").show();
   });
+
+  if ( cards[card]["attack"] != "none" ) {
+    $("#attack").html("<p>" + cards[card]["attack"] + "</p>");
+    $("#attack").dialog();
+  }
+
 }
 
 function buy(card) {
@@ -476,6 +484,11 @@ function addToHand(card) {
     var coins = parseInt($("#coins").text()) + parseInt(cards[card]["coins"]);
     $("#coins").text(coins);
   }
+  $(".card").draggable({
+    containment: "#container",
+    helper: 'clone',
+    zIndex: 100
+  });
 }
 
 function show(card) {
