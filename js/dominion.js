@@ -380,21 +380,19 @@ function setText(pair) {
 function playCard(card) {
   log(curPlayer + " played " + card);
   if ( cards[card]["type"] == "action" ) {
-    var actCnt = parseInt($("#actions").text()) - 1 + parseInt(cards[card]["actions"]);
-    socket.send("setText=actions:" + actCnt);
 
     var coins = 0;
     if ( curPlayer == userName ) {
       coins = draw(parseInt(cards[card]["cards"]));
       console.log("drew new coins " + coins)
       $("#hand #" + card + ":first").remove();
+      var actCnt = parseInt($("#actions").text()) - 1 + parseInt(cards[card]["actions"]);
+      socket.send("setText=actions:" + actCnt);
+      coins = coins + parseInt($("#coins").text()) + parseInt(cards[card]["coins"]);
+      socket.send("setText=coins:" + coins);
+      var buys = parseInt($("#buys").text()) + parseInt(cards[card]["buys"]);
+      socket.send("setText=buys:" + buys);
     }
-
-    coins = coins + parseInt($("#coins").text()) + parseInt(cards[card]["coins"]);
-    socket.send("setText=coins:" + coins);
-
-    var buys = parseInt($("#buys").text()) + parseInt(cards[card]["buys"]);
-    socket.send("setText=buys:" + buys);
 
     $("<img id=\"" + card + "\" src=\"images/" + cards[card]['packName'] + "/" + card + ".jpg\" class=\"card played\"></div>").appendTo($("#playArea"));
     if ( $("#playArea .card").length > 1 && $(".played").length == 1 ) {
