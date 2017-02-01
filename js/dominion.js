@@ -373,6 +373,7 @@ function startTurn(player) {
 
 function setText(pair) {
   parts = pair.split(":");
+  console.log("Setting text " + parts[0] + " to " + parts[1]);
   $("#" + parts[0]).text(parts[1]);
 }
 
@@ -385,6 +386,7 @@ function playCard(card) {
     var coins = 0;
     if ( curPlayer == userName ) {
       coins = draw(parseInt(cards[card]["cards"]));
+      console.log("drew new coins " + coins)
       $("#hand #" + card + ":first").remove();
     }
 
